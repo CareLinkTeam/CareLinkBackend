@@ -1,9 +1,11 @@
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
 CREATE TABLE role (
     id SERIAL PRIMARY KEY,
     role_name VARCHAR
 );
-CREATE TABLE "user" (
-    id UUID PRIMARY KEY,
+CREATE TABLE users (
+    id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
     username VARCHAR,
     password VARCHAR,
     name VARCHAR,
@@ -15,26 +17,26 @@ CREATE TABLE "user" (
 );
 CREATE TABLE role_mapping (
     id SERIAL PRIMARY KEY,
-    role_id BIGINT REFERENCES role(id),
-    user_id UUID REFERENCES "user"(id)
+    role_id INT REFERENCES role(id),
+    user_id UUID REFERENCES users(id)
 );
 CREATE TABLE posting (
     id SERIAL PRIMARY KEY,
-    user_id UUID REFERENCES "user"(id),
+    user_id UUID REFERENCES users(id),
     name VARCHAR,
     tel VARCHAR,
-    age BIGINT,
+    age INT,
     gender VARCHAR,
     disease VARCHAR,
     location VARCHAR,
     start_time DATE,
     end_time DATE,
-    status BIGINT,
+    status INT,
     working_date DATE
 );
 CREATE TABLE caretaker (
     id UUID PRIMARY KEY,
-    user_id UUID REFERENCES "user"(id),
+    user_id UUID REFERENCES users(id),
     education VARCHAR,
     working_history VARCHAR,
     skill VARCHAR
@@ -59,18 +61,18 @@ CREATE TABLE working_detail (
 
 CREATE TABLE accepted_work (
     id SERIAL PRIMARY KEY,
-    posting_id BIGINT REFERENCES posting(id),
+    posting_id INT REFERENCES posting(id),
     caretaker_id UUID REFERENCES caretaker(id),
-    rating BIGINT,
-    working_detail_id BIGINT REFERENCES working_detail(id)
+    rating INT,
+    working_detail_id INT REFERENCES working_detail(id)
 );
 
 CREATE TABLE payment (
     id UUID PRIMARY KEY,
-    payment_method BIGINT,
-    amount BIGINT,
-    payment_status BIGINT,
+    payment_method INT,
+    amount INT,
+    payment_status INT,
     create_date DATE,
     update_date DATE,
-    posting_id BIGINT REFERENCES posting(id)
+    posting_id INT REFERENCES posting(id)
 );

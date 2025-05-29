@@ -1,0 +1,26 @@
+services:
+  carelink_db:
+    image: postgres:16-alpine
+    container_name: carelink_db
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_DB: carelink
+      POSTGRES_PASSWORD: pass
+    volumes:
+      - carelink_data:/var/lib/postgres
+      - ./carelink.sql:/docker-entrypoint-initdb.d/init.sql
+     
+    ports:
+      - 5432:5432
+    networks:
+      - carelink_network
+
+
+volumes:
+  carelink_data:
+    external: false
+
+networks:
+  carelink_network:
+    driver: bridge
+    external: false

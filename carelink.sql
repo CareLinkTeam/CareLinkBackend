@@ -2,7 +2,7 @@ CREATE TABLE role (
     id SERIAL PRIMARY KEY,
     role_name VARCHAR
 );
-CREATE TABLE "User" (
+CREATE TABLE "user" (
     id UUID PRIMARY KEY,
     username VARCHAR,
     password VARCHAR,
@@ -16,11 +16,11 @@ CREATE TABLE "User" (
 CREATE TABLE role_mapping (
     id SERIAL PRIMARY KEY,
     role_id BIGINT REFERENCES role(id),
-    user_id UUID REFERENCES "User"(id)
+    user_id UUID REFERENCES "user"(id)
 );
 CREATE TABLE posting (
     id SERIAL PRIMARY KEY,
-    user_id UUID REFERENCES "User"(id),
+    user_id UUID REFERENCES "user"(id),
     name VARCHAR,
     tel VARCHAR,
     age BIGINT,
@@ -34,7 +34,7 @@ CREATE TABLE posting (
 );
 CREATE TABLE caretaker (
     id UUID PRIMARY KEY,
-    user_id UUID REFERENCES "User"(id),
+    user_id UUID REFERENCES "user"(id),
     education VARCHAR,
     working_history VARCHAR,
     skill VARCHAR

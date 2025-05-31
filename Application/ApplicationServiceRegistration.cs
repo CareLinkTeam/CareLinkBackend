@@ -12,6 +12,7 @@ namespace Application
         public static IServiceCollection AddApplicationService(this IServiceCollection services)
         {
             services.AddScoped<IUsersService, UsersService>();
+            services.AddScoped<JwtTokenService>();
             return services;
         }
     }

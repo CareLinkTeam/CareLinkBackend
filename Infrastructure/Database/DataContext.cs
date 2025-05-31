@@ -32,6 +32,8 @@ public partial class DataContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.HasPostgresExtension("uuid-ossp");
+
         modelBuilder.Entity<AcceptedWork>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("accepted_work_pkey");
@@ -175,7 +177,7 @@ public partial class DataContext : DbContext
             entity.ToTable("users");
 
             entity.Property(e => e.Id)
-                .ValueGeneratedNever()
+                .HasDefaultValueSql("uuid_generate_v4()")
                 .HasColumnName("id");
             entity.Property(e => e.Address)
                 .HasColumnType("character varying")
@@ -193,9 +195,9 @@ public partial class DataContext : DbContext
             entity.Property(e => e.Password)
                 .HasColumnType("character varying")
                 .HasColumnName("password");
-            entity.Property(e => e.Tel)
+            entity.Property(e => e.Phone)
                 .HasColumnType("character varying")
-                .HasColumnName("tel");
+                .HasColumnName("phone");
             entity.Property(e => e.Username)
                 .HasColumnType("character varying")
                 .HasColumnName("username");

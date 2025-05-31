@@ -1,15 +1,24 @@
+-- Enable the UUID extension for PostgreSQL
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
-
+DROP TABLE IF EXISTS role_mapping,
+    users,
+    role,
+    posting,
+    caretaker,
+    work_period,
+    working_detail,
+    accepted_work,
+    payment;
 CREATE TABLE role (
     id SERIAL PRIMARY KEY,
     role_name VARCHAR
 );
 CREATE TABLE users (
-    id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     username VARCHAR,
     password VARCHAR,
     name VARCHAR,
-    tel VARCHAR,
+    phone VARCHAR,
     gender VARCHAR,
     address VARCHAR,
     image VARCHAR,
@@ -76,3 +85,8 @@ CREATE TABLE payment (
     update_date DATE,
     posting_id INT REFERENCES posting(id)
 );
+
+INSERT INTO role (role_name) VALUES
+('customers'),
+('caretakers'),
+('admin');

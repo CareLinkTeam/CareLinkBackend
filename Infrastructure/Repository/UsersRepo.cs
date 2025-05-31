@@ -11,7 +11,7 @@ namespace Infrastructure.Repository
     {
         private readonly DataContext _dataContext = dataContext;
 
-        public async Task<Users> CreateUser(CreateUserDto user)
+        public async Task<Users> CreateCustomer(CreateUserDto user)
         {
             // check if the user is exist
             var existUser = await _dataContext.Users.AsNoTracking()
@@ -21,6 +21,7 @@ namespace Infrastructure.Repository
             {
                 throw new Exception("User Already Exist");
             }
+
             // string hashedPassword = BC.HashPassword(user.PasswordHash);
 
             var newUser = new Users()
@@ -28,7 +29,7 @@ namespace Infrastructure.Repository
                 Username = user.UserName,
                 Password = user.Password,
                 Name = user.Name,
-                Tel = user.Telephone,
+                Phone = user.Phone,
                 Gender = user.Gender,
                 Address = user.Address,
                 Age = user.Age
@@ -39,8 +40,16 @@ namespace Infrastructure.Repository
             return newUser;
         }
 
-      
-
+        public async Task<Users> GetUserByUsernamePassword(string username, string password)
+        {
+            var user = await _dataContext.Users.AsNoTracking()
+            .Where(x => x.Username == username && x.Password == password).FirstOrDefaultAsync();
+            if (user == null)
+            {
+                throw new Exception("User Not Found");
+            }
+            return user;
+        }
 
     }
 }

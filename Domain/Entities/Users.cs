@@ -7,13 +7,13 @@ public partial class Users
 {
     public Guid Id { get; set; }
 
-    public string? Username { get; set; }
+    public string Username { get; set; } = null!;
 
-    public string? Password { get; set; }
+    public string Password { get; set; } = null!;
 
-    public string? Name { get; set; }
+    public string Name { get; set; } = null!;
 
-    public string? Tel { get; set; }
+    public string? Phone { get; set; }
 
     public string? Gender { get; set; }
 
@@ -25,7 +25,7 @@ public partial class Users
 
     public virtual ICollection<Caretaker> Caretaker { get; set; } = new List<Caretaker>();
 
-    public virtual ICollection<Posting> Posting { get; set; } = new List<Posting>();
+    public virtual ICollection<Post> Post { get; set; } = new List<Post>();
 
     public virtual ICollection<RoleMapping> RoleMapping { get; set; } = new List<RoleMapping>();
 }

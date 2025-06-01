@@ -18,4 +18,6 @@ public partial class WorkPeriod
     public bool? IsActive { get; set; }
 
     public virtual Caretaker? Caretaker { get; set; }
+
+    public virtual ICollection<WorkDetail> WorkDetail { get; set; } = new List<WorkDetail>();
 }

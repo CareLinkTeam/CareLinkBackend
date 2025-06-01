@@ -14,6 +14,4 @@ public partial class WorkingDetail
     public DateOnly? CreateDate { get; set; }
 
     public DateOnly? UpdateDate { get; set; }
-
-    public virtual ICollection<AcceptedWork> AcceptedWork { get; set; } = new List<AcceptedWork>();
 }

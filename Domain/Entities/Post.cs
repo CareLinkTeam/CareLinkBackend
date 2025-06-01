@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Domain;
 
-public partial class Posting
+public partial class Post
 {
     public int Id { get; set; }
 
@@ -30,4 +30,10 @@ public partial class Posting
     public int? Status { get; set; }
 
     public DateOnly? WorkingDate { get; set; }
+
+    public virtual ICollection<AcceptedWork> AcceptedWork { get; set; } = new List<AcceptedWork>();
+
+    public virtual ICollection<Payment> Payment { get; set; } = new List<Payment>();
+
+    public virtual Users? User { get; set; }
 }

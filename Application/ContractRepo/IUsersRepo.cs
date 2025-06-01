@@ -5,6 +5,8 @@ namespace Application.ContractRepo
 {
     public interface IUsersRepository
     {
-        Task<Users> CreateUser(CreateUserDto user);
+        Task<Users> CreateCustomer(CreateUserDto user);
+        Task<Users> GetUserByUsernamePassword(string username, string password);
+        Task<Users?> GetUserByUsername(string username);
     }
 }

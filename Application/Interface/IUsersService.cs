@@ -5,6 +5,7 @@ namespace Application.Interface
 {
     public interface IUsersService
     {
-        Task<Users> CreateUser(CreateUserDto user);
+        Task<string> SignUpCustomer(CreateUserDto user);
+        Task<string> Login(string username, string password);
     }
 }

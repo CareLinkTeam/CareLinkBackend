@@ -13,6 +13,7 @@ namespace Infrastructure
         public static IServiceCollection AddInfrastructureService(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddScoped<IUsersRepository, UsersRepository>();
+            services.AddScoped<IRoleRepository, RoleRepository>();
 
             var DataConnectionString = configuration.GetConnectionString("db");
             services.AddDbContext<DataContext>(options =>

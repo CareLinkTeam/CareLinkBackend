@@ -17,7 +17,7 @@ public partial class Payment
 
     public DateOnly? UpdateDate { get; set; }
 
-    public int? PostingId { get; set; }
+    public int? PostId { get; set; }
 
-    public virtual Posting? Posting { get; set; }
+    public virtual Post? Post { get; set; }
 }

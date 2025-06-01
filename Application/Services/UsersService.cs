@@ -7,8 +7,6 @@ using Domain;
 
 using Microsoft.Extensions.Configuration;
 
-
-
 namespace Application.Services
 {
     public class UsersService(

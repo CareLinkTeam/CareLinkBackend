@@ -40,6 +40,7 @@ builder.Services.AddSwaggerGen(x =>
 builder.Services.AddControllers();
 builder.Services.AddApplicationService();
 builder.Services.AddInfrastructureService(builder.Configuration);
+builder.Services.AddHttpContextAccessor();
 
 var jwtSettings = builder.Configuration.GetSection("JWT");
 builder.Services.AddAuthentication(options =>

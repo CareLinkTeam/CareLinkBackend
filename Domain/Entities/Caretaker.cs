@@ -11,7 +11,7 @@ public partial class Caretaker
 
     public string? Education { get; set; }
 
-    public string? WorkingHistory { get; set; }
+    public string? WorkHistory { get; set; }
 
     public string? Skill { get; set; }
 

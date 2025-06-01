@@ -2,13 +2,15 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using Application.Utils;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 
 namespace Application.Services;
 
-public class JwtTokenService(IConfiguration configuration)
+public class JwtTokenService(IConfiguration configuration, IHttpContextAccessor httpcontextAccessor) 
 {
+    private readonly IHttpContextAccessor _httpcontextAccessor = httpcontextAccessor;
     private readonly IConfiguration _configuration = configuration;
 
     public string GenerateToken(Guid userId, string name, string role)
@@ -35,5 +37,10 @@ public class JwtTokenService(IConfiguration configuration)
         );
 
         return new JwtSecurityTokenHandler().WriteToken(token);
+    }
+    public string GetUserIdFromToken()
+    {
+        var userIdClaim = _httpcontextAccessor.HttpContext?.User.FindFirst("Role");
+        return userIdClaim.Value;
     }
 }

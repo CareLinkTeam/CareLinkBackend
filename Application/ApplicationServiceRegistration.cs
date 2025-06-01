@@ -13,6 +13,7 @@ namespace Application
         {
             services.AddScoped<IUsersService, UsersService>();
             services.AddScoped<JwtTokenService>();
+            services.AddScoped<IRoleService, RoleService>();
             return services;
         }
     }

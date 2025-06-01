@@ -52,6 +52,11 @@ namespace Infrastructure.Repository
             await _dataContext.SaveChangesAsync();
             return true;
         }
+        public async Task<List<Role>> GetAllRoles()
+        {
+            var roles = await _dataContext.Role.AsNoTracking().ToListAsync();
+            return roles;
+        }
 
     }
 }

@@ -13,17 +13,7 @@ namespace Infrastructure.Repository
 
         public async Task<Users> CreateCustomer(CreateUserDto user)
         {
-            // check if the user is exist
-            var existUser = await _dataContext.Users.AsNoTracking()
-                .Where(x => x.Username == user.UserName).FirstOrDefaultAsync();
-
-            if (existUser != null)
-            {
-                throw new Exception("User Already Exist");
-            }
-
-            // string hashedPassword = BC.HashPassword(user.PasswordHash);
-
+            
             var newUser = new Users()
             {
                 Username = user.UserName,
@@ -48,6 +38,13 @@ namespace Infrastructure.Repository
             {
                 throw new Exception("User Not Found");
             }
+            return user;
+        }
+
+        public async Task<Users?> GetUserByUsername(string username)
+        {
+            var user = await _dataContext.Users.AsNoTracking()
+                .Where(x => x.Username == username).FirstOrDefaultAsync();
             return user;
         }
 

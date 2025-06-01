@@ -8,7 +8,7 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace Application.Services;
 
-public class JwtTokenService(IConfiguration configuration, IHttpContextAccessor httpcontextAccessor) 
+public class JwtTokenService(IConfiguration configuration, IHttpContextAccessor httpcontextAccessor)
 {
     private readonly IHttpContextAccessor _httpcontextAccessor = httpcontextAccessor;
     private readonly IConfiguration _configuration = configuration;
@@ -38,9 +38,22 @@ public class JwtTokenService(IConfiguration configuration, IHttpContextAccessor 
 
         return new JwtSecurityTokenHandler().WriteToken(token);
     }
-    public string GetUserIdFromToken()
+    public string GetRoleFromToken()
     {
         var userIdClaim = _httpcontextAccessor.HttpContext?.User.FindFirst("Role");
-        return userIdClaim.Value;
+        if (userIdClaim == null)
+        {
+            throw new Exception("Role not found in token");
+        }
+        return userIdClaim.Value ?? throw new Exception("Role not found in token");
     }
+    public string GetUserIdFromToken()
+    {
+        var userIdClaim = _httpcontextAccessor.HttpContext?.User.FindFirst("UserID");
+        if (userIdClaim == null)
+        {
+            throw new Exception("User ID not found in token");
+        }
+        return userIdClaim.Value ?? throw new Exception("User ID not found in token");
+    }   
 }

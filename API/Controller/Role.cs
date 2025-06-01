@@ -49,7 +49,7 @@ namespace API.Controller
 
             try
             {
-                var userRole = _jwtTokenService.GetUserIdFromToken();
+                var userRole = _jwtTokenService.GetRoleFromToken();
                 response.SetSuccess(userRole, "User role retrieved successfully.", "200");
                 return Ok(response);
             }

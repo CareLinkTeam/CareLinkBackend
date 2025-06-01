@@ -4,7 +4,7 @@ using Application.Interface;
 using Application.Utils;
 using BCrypt.Net;
 using Domain;
-using Microsoft.AspNetCore.Identity;
+
 using Microsoft.Extensions.Configuration;
 
 
@@ -56,6 +56,8 @@ namespace Application.Services
             {
                 throw new Exception("Invalid password");
             }
+
+            //Get User Role
             var userRole = await _roleRepository.GetUserRole(existingUser.Id);
             return _jwtTokenService.GenerateToken(existingUser.Id, existingUser.Name, IdentityData.CustomerRole);
             

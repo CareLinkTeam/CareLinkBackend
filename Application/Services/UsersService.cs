@@ -60,8 +60,19 @@ namespace Application.Services
             //Get User Role
             var userRole = await _roleRepository.GetUserRole(existingUser.Id);
             return _jwtTokenService.GenerateToken(existingUser.Id, existingUser.Name, IdentityData.CustomerRole);
-            
+
         }
+        
+        public async Task<Users> UpdateCustomer(UserDto user)
+        {
+            var existUser = await _usersRepository.UpdateCustomer(user);
+            if (existUser == null)
+            {
+                throw new Exception("User not found.");
+            }
+            return existUser;
+        }
+
 
     }
 }

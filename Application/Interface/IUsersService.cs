@@ -7,5 +7,6 @@ namespace Application.Interface
     {
         Task<string> SignUpCustomer(CreateUserDto user);
         Task<string> Login(string username, string password);
+        Task<Users> UpdateCustomer(UserDto user);
     }
 }

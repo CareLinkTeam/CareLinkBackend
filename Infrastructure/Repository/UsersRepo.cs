@@ -13,7 +13,7 @@ namespace Infrastructure.Repository
 
         public async Task<Users> CreateCustomer(CreateUserDto user)
         {
-            
+
             var newUser = new Users()
             {
                 Username = user.UserName,
@@ -47,6 +47,47 @@ namespace Infrastructure.Repository
                 .Where(x => x.Username == username).FirstOrDefaultAsync();
             return user;
         }
+        
+        public async Task<Users> UpdateCustomer(UserDto user)
+        {
+            var existUser = await _dataContext.Users
+            .Where(x => x.Username == user.UserName).FirstOrDefaultAsync();
+
+            if (existUser == null)
+            {
+                throw new Exception("User Not Found");
+            }
+
+            if (user.Name != null)
+            {
+                existUser.Name = user.Name;
+            }
+            if (user.Phone != null)
+            {
+                existUser.Phone = user.Phone;
+            }
+            if (user.Gender != null)
+            {
+                existUser.Gender = user.Gender;
+            }
+            if (user.Address != null)
+            {
+                existUser.Address = user.Address;
+            }
+            if (user.Age.HasValue)
+            {
+                existUser.Age = user.Age;
+            }
+            if (user.Image != null)
+            {
+                existUser.Image = user.Image;
+            }
+
+            _dataContext.Users.Update(existUser);
+            await _dataContext.SaveChangesAsync();
+            return existUser;
+        }
+
 
     }
 }

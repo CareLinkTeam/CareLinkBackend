@@ -29,7 +29,7 @@ namespace API.Controller
             {
                 var updatedUser = await _userService.UpdateUser(user);
                 response.SetSuccess(updatedUser, "User updated successfully.", "200");
-                return Ok();
+                return Ok(response);
             }
             catch (Exception ex)
             {
@@ -52,7 +52,7 @@ namespace API.Controller
             try
             {
                 var user = await _userService.GetUserByUsername(username);
-                response.SetSuccess(user, "User updated successfully.", "200");
+                response.SetSuccess(user, "User retrieved successfully.", "200");
                 return Ok(response);
             }
             catch (Exception ex)

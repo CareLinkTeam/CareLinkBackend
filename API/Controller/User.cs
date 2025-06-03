@@ -59,13 +59,38 @@ namespace API.Controller
             {
                 var error = new ErrorData
                 {
-                    Code = "1-UpdateUser",
+                    Code = "1-GetUserDetails",
                     Message = ex.Message
                 };
                 _logger.LogError(ex, "Error updating user");
                 return BadRequest(error);
             }
         }
+
+        [HttpDelete("DeleteUser")]
+        [Authorize]
+        public async Task<IActionResult> DeleteUser(string username)
+        {
+            var response = new BaseHttpResponse<string>();
+
+            try
+            {
+                var user = await _userService.DeleteUser(username);
+                response.SetSuccess(user, "User deleted successfully.", "200");
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                var error = new ErrorData
+                {
+                    Code = "1-DeleteUser",
+                    Message = ex.Message
+                };
+                _logger.LogError(ex, "Error updating user");
+                return BadRequest(error);
+            }
+        }
+
 
 
     }

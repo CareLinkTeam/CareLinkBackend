@@ -9,5 +9,6 @@ namespace Application.Interface
         Task<string> Login(string username, string password);
         Task<Users> UpdateUser(UserDto user);
         Task<Users> GetUserByUsername(string username);
+        Task<string> DeleteUser(string username);
     }
 }

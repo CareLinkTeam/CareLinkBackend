@@ -47,7 +47,7 @@ namespace Infrastructure.Repository
                 .Where(x => x.Username == username).FirstOrDefaultAsync();
             return user;
         }
-        
+
         public async Task<Users> UpdateUser(UserDto user)
         {
             var existUser = await _dataContext.Users
@@ -86,6 +86,35 @@ namespace Infrastructure.Repository
             _dataContext.Users.Update(existUser);
             await _dataContext.SaveChangesAsync();
             return existUser;
+        }
+        
+        public async Task<string> DeleteUser(string username)
+        {
+            var user = await _dataContext.Users.AsNoTracking()
+                .Where(x => x.Username == username).FirstOrDefaultAsync();
+
+            if (user == null)
+            {
+                throw new Exception("User Not Found");
+            }
+
+            // Remove related RoleMapping entries
+            var roleMappings = await _dataContext.RoleMapping
+                .Where(x => x.UserId == user.Id).ToListAsync();
+            _dataContext.RoleMapping.RemoveRange(roleMappings);
+
+            // Remove the user
+            var userToDelete = await _dataContext.Users
+                .Where(x => x.Username == username).FirstOrDefaultAsync();
+            if (userToDelete != null)
+            {
+                _dataContext.Users.Remove(userToDelete);
+                await _dataContext.SaveChangesAsync();
+            }
+
+            var response = $"User {username} deleted successfully.";
+    
+            return response;
         }
 
 

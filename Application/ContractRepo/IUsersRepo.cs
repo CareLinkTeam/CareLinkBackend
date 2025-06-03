@@ -9,5 +9,6 @@ namespace Application.ContractRepo
         Task<Users> GetUserByUsernamePassword(string username, string password);
         Task<Users?> GetUserByUsername(string username);
         Task<Users> UpdateUser(UserDto user);
+        Task<string> DeleteUser(string username);
     }
 }

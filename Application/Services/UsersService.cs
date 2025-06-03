@@ -72,10 +72,22 @@ namespace Application.Services
             }
             return existUser;
         }
-        
+
         public async Task<Users> GetUserByUsername(string username)
         {
             var user = await _usersRepository.GetUserByUsername(username);
+
+            if (user == null)
+            {
+                throw new Exception("User not found.");
+            }
+
+            return user;
+        }
+        
+        public async Task<string> DeleteUser (string username)
+        {
+            var user = await _usersRepository.DeleteUser(username);
 
             if (user == null)
             {

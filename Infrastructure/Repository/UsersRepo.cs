@@ -48,7 +48,7 @@ namespace Infrastructure.Repository
             return user;
         }
         
-        public async Task<Users> UpdateCustomer(UserDto user)
+        public async Task<Users> UpdateUser(UserDto user)
         {
             var existUser = await _dataContext.Users
             .Where(x => x.Username == user.UserName).FirstOrDefaultAsync();
@@ -58,19 +58,19 @@ namespace Infrastructure.Repository
                 throw new Exception("User Not Found");
             }
 
-            if (user.Name != null)
+            if (!string.IsNullOrEmpty(user.Name))
             {
                 existUser.Name = user.Name;
             }
-            if (user.Phone != null)
+            if (!string.IsNullOrEmpty(user.Phone))
             {
                 existUser.Phone = user.Phone;
             }
-            if (user.Gender != null)
+            if (!string.IsNullOrEmpty(user.Gender))
             {
                 existUser.Gender = user.Gender;
             }
-            if (user.Address != null)
+            if (!string.IsNullOrEmpty(user.Address))
             {
                 existUser.Address = user.Address;
             }
@@ -78,7 +78,7 @@ namespace Infrastructure.Repository
             {
                 existUser.Age = user.Age;
             }
-            if (user.Image != null)
+            if (!string.IsNullOrEmpty(user.Image))
             {
                 existUser.Image = user.Image;
             }

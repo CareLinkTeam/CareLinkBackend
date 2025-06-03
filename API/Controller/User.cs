@@ -19,15 +19,15 @@ namespace API.Controller
         private readonly IUsersService _userService = userService;
 
 
-        [HttpPut("UpdateCustomer")]
+        [HttpPut("UpdateUser")]
         [Authorize]
-        public async Task<IActionResult> UpdateCustomer(UserDto user)
+        public async Task<IActionResult> UpdateUser(UserDto user)
         {
             var response = new BaseHttpResponse<Users>();
 
             try
             {
-                var updatedUser = await _userService.UpdateCustomer(user);
+                var updatedUser = await _userService.UpdateUser(user);
                 response.SetSuccess(updatedUser, "User updated successfully.", "200");
                 return Ok();
             }

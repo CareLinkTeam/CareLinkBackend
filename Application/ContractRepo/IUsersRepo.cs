@@ -8,6 +8,6 @@ namespace Application.ContractRepo
         Task<Users> CreateCustomer(CreateUserDto user);
         Task<Users> GetUserByUsernamePassword(string username, string password);
         Task<Users?> GetUserByUsername(string username);
-        Task<Users> UpdateCustomer(UserDto user);
+        Task<Users> UpdateUser(UserDto user);
     }
 }

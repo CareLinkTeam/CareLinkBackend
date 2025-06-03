@@ -63,9 +63,9 @@ namespace Application.Services
 
         }
         
-        public async Task<Users> UpdateCustomer(UserDto user)
+        public async Task<Users> UpdateUser(UserDto user)
         {
-            var existUser = await _usersRepository.UpdateCustomer(user);
+            var existUser = await _usersRepository.UpdateUser(user);
             if (existUser == null)
             {
                 throw new Exception("User not found.");

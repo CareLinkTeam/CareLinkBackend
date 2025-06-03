@@ -62,7 +62,7 @@ namespace Application.Services
             return _jwtTokenService.GenerateToken(existingUser.Id, existingUser.Name, IdentityData.CustomerRole);
 
         }
-        
+
         public async Task<Users> UpdateUser(UserDto user)
         {
             var existUser = await _usersRepository.UpdateUser(user);
@@ -71,6 +71,18 @@ namespace Application.Services
                 throw new Exception("User not found.");
             }
             return existUser;
+        }
+        
+        public async Task<Users> GetUserByUsername(string username)
+        {
+            var user = await _usersRepository.GetUserByUsername(username);
+
+            if (user == null)
+            {
+                throw new Exception("User not found.");
+            }
+
+            return user;
         }
 
 

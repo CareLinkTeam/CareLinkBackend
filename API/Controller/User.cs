@@ -43,6 +43,30 @@ namespace API.Controller
             }
         }
 
+        [HttpGet("GetUserDetails")]
+        [Authorize]
+        public async Task<IActionResult> GetUserDetails(string username)
+        {
+            var response = new BaseHttpResponse<Users>();
+
+            try
+            {
+                var user = await _userService.GetUserByUsername(username);
+                response.SetSuccess(user, "User updated successfully.", "200");
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                var error = new ErrorData
+                {
+                    Code = "1-UpdateUser",
+                    Message = ex.Message
+                };
+                _logger.LogError(ex, "Error updating user");
+                return BadRequest(error);
+            }
+        }
+
 
     }
 }

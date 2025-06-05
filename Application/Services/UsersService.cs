@@ -65,21 +65,35 @@ namespace Application.Services
 
         public async Task<Users> UpdateUser(UserDto user)
         {
-            var existUser = await _usersRepository.UpdateUser(user);
-            if (existUser == null)
+            var userData = await _usersRepository.GetUserByUsername(user.UserName);
+            var idUser = _jwtTokenService.GetUserIdFromToken();
+
+            if (userData == null)
             {
                 throw new Exception("User not found.");
             }
-            return existUser;
+            if (userData.Id != Guid.Parse(idUser))
+            {
+                throw new Exception("User not unauthorized.");
+            }
+
+            var updatedUser = await _usersRepository.UpdateUser(user);
+            
+            return updatedUser;
         }
 
         public async Task<Users> GetUserByUsername(string username)
         {
             var user = await _usersRepository.GetUserByUsername(username);
+            var idUser = _jwtTokenService.GetUserIdFromToken();
 
             if (user == null)
             {
                 throw new Exception("User not found.");
+            }
+            if (user.Id != Guid.Parse(idUser))
+            {
+                throw new Exception("User not unauthorized.");
             }
 
             return user;
@@ -87,14 +101,21 @@ namespace Application.Services
         
         public async Task<string> DeleteUser (string username)
         {
-            var user = await _usersRepository.DeleteUser(username);
+            var user = await _usersRepository.GetUserByUsername(username);
+            var idUser = _jwtTokenService.GetUserIdFromToken();
 
             if (user == null)
             {
                 throw new Exception("User not found.");
             }
+            if (user.Id != Guid.Parse(idUser))
+            {
+                throw new Exception("User not unauthorized.");
+            }
 
-            return user;
+            var deletedUser = await _usersRepository.DeleteUser(username);
+
+            return deletedUser;
         }
 
 

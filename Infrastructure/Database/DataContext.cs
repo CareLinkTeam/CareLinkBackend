@@ -20,8 +20,6 @@ public partial class DataContext : DbContext
 
     public virtual DbSet<Post> Post { get; set; }
 
-    public virtual DbSet<Posting> Posting { get; set; }
-
     public virtual DbSet<Role> Role { get; set; }
 
     public virtual DbSet<RoleMapping> RoleMapping { get; set; }
@@ -31,8 +29,6 @@ public partial class DataContext : DbContext
     public virtual DbSet<WorkDetail> WorkDetail { get; set; }
 
     public virtual DbSet<WorkPeriod> WorkPeriod { get; set; }
-
-    public virtual DbSet<WorkingDetail> WorkingDetail { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -144,37 +140,6 @@ public partial class DataContext : DbContext
                 .HasConstraintName("post_user_id_fkey");
         });
 
-        modelBuilder.Entity<Posting>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("posting_pkey");
-
-            entity.ToTable("posting");
-
-            entity.Property(e => e.Id).HasColumnName("id");
-            entity.Property(e => e.Age).HasColumnName("age");
-            entity.Property(e => e.Description).HasColumnName("description");
-            entity.Property(e => e.Disease)
-                .HasColumnType("character varying")
-                .HasColumnName("disease");
-            entity.Property(e => e.EndTime).HasColumnName("end_time");
-            entity.Property(e => e.Gender)
-                .HasColumnType("character varying")
-                .HasColumnName("gender");
-            entity.Property(e => e.Location)
-                .HasColumnType("character varying")
-                .HasColumnName("location");
-            entity.Property(e => e.StartTime).HasColumnName("start_time");
-            entity.Property(e => e.Status).HasColumnName("status");
-            entity.Property(e => e.Tel)
-                .HasColumnType("character varying")
-                .HasColumnName("tel");
-            entity.Property(e => e.Title)
-                .HasColumnType("character varying")
-                .HasColumnName("title");
-            entity.Property(e => e.UserId).HasColumnName("user_id");
-            entity.Property(e => e.WorkingDate).HasColumnName("working_date");
-        });
-
         modelBuilder.Entity<Role>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("role_pkey");
@@ -231,6 +196,9 @@ public partial class DataContext : DbContext
             entity.Property(e => e.Image)
                 .HasColumnType("character varying")
                 .HasColumnName("image");
+            entity.Property(e => e.IsActive)
+                .HasDefaultValue(true)
+                .HasColumnName("is_active");
             entity.Property(e => e.Name)
                 .HasColumnType("character varying")
                 .HasColumnName("name");
@@ -285,21 +253,6 @@ public partial class DataContext : DbContext
                 .HasForeignKey(d => d.CaretakerId)
                 .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("work_period_caretaker_id_fkey");
-        });
-
-        modelBuilder.Entity<WorkingDetail>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("working_detail_pkey");
-
-            entity.ToTable("working_detail");
-
-            entity.Property(e => e.Id).HasColumnName("id");
-            entity.Property(e => e.AcceptWorkId).HasColumnName("accept_work_id");
-            entity.Property(e => e.CreateDate).HasColumnName("create_date");
-            entity.Property(e => e.UpdateDate).HasColumnName("update_date");
-            entity.Property(e => e.WorkDetail)
-                .HasColumnType("character varying")
-                .HasColumnName("work_detail");
         });
 
         OnModelCreatingPartial(modelBuilder);

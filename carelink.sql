@@ -30,7 +30,8 @@ CREATE TABLE users (
     gender VARCHAR,
     address VARCHAR,
     image VARCHAR,
-    age INT
+    age INT,
+    is_active BOOLEAN DEFAULT TRUE NOT NULL
 );
 
 -- Role mapping with ON DELETE CASCADE

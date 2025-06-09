@@ -23,6 +23,8 @@ public partial class Users
 
     public int? Age { get; set; }
 
+    public bool IsActive { get; set; }
+
     public virtual ICollection<Caretaker> Caretaker { get; set; } = new List<Caretaker>();
 
     public virtual ICollection<Post> Post { get; set; } = new List<Post>();
